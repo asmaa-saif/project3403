@@ -1,0 +1,44 @@
+<html>
+	<head>
+		<title>Orders</title>
+	</head>
+
+	<body>
+
+		<div id="itemsCount"> </div>
+		<div id="itemsDiv"> </div>
+
+		<script>
+			function handleResponse() {
+  				console.log(this.responseText);
+
+  				let itemsDiv = document.getElementById("orderDiv");
+  				//convert responseText to a JS object
+  				let jsonArray = JSON.parse(this.responseText);
+
+  				let itemsCount = document.getElementById("orderCount");
+  				itemsCount.innerHTML = "We have found " +jsonArray.length + " items!";
+
+  				let counter = 0;
+  				for (let item of jsonArray) {
+  					let p = document.createElement("p");
+  					let itemString = counter+ ". "+item.item_name + " Price AED "+item.price.toFixed(2);
+  					let pText = document.createTextNode(itemString);
+  					p.appendChild(pText);
+
+  					//add the p to the itemsDiv
+  					itemsDiv.appendChild(p);
+  				}
+			}
+
+			let httpRequest = new XMLHttpRequest();
+			httpRequest.addEventListener("load", handleResponse);
+			httpRequest.open("GET", "http://localhost:7979/");
+			httpRequest.send();
+			
+		
+		</script>
+
+	</body>
+
+</html>

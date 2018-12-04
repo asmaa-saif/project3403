@@ -1,0 +1,48 @@
+<html>
+<head>
+	<title>Add a new item</title>
+	 <link rel="stylesheet" href="stylesheet.css">
+</head>
+
+<body>
+
+
+	<div class="header">
+  <a href="#default" class="logo">Flower Store </a>
+  <div class="header-right">
+   <a href="index.html">View Orders</a>
+    <a class="active" href="AddOrder.html">Place Order</a>
+    <a href="UpdateOrder.html">Update Order</a>
+   <a href="DeleteOrder.html">Delete Order</a>
+  </div>
+</div>
+		
+<div align="center">
+<div style="padding-left:20px">
+        <h3>Place an order</h3>
+		<div id="orderCount"> </div>
+		<div id="orderDiv"> </div>
+
+		
+
+	<h4>Using HTTP POST to route <code>/invoices</code></h4>
+</div>
+
+<form id="newItemForm" action="/invoices" method="POST">
+
+  Enter Order ID: <input type="text" name="Order_id" required><br>
+  
+  Enter Flower type: <input type="text" name="Type" required><br>
+  
+  Enter Occasion: <input type="text" name="Occasion" required><br>
+  
+  Enter Color: <input type="text" name="Color" required><br>
+  
+  Enter Price: <input type="text" name="Price" required><br>
+  
+  <input type="submit" value="Place an order" />
+  
+</form>
+
+</body>
+</html> 

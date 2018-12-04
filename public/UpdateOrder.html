@@ -1,0 +1,99 @@
+<html>
+<head>
+	<title>Update order</title>
+		 <link rel="stylesheet" href="stylesheet.css">
+</head>
+
+</body>
+
+<div class="header">
+  <a href="#default" class="logo">Flower Store </a>
+  <div class="header-right">
+   <a href="index.html">View Orders</a>
+    <a href="AddOrder.html">Place Order</a>
+    <a class="active" href="UpdateOrder.html">Update Order</a>
+   <a href="DeleteOrder.html">Delete Order</a>
+  </div>
+</div>
+	
+		
+<div align="center">
+<div style="padding-left:20px">
+	<h3>Update an Order</h3>
+
+	<h4>Using HTTP PUT to route <code>/invoices</code></h4>
+</div>
+
+<div>Note: that order id must exist</div>
+
+<form id="updateItemForm" action="/invoices?_method=PUT" method="POST">
+
+ Enter Order ID: <input type="text" name="Order_id" required><br>
+  
+  Enter Flower type: <input type="text" name="Type" required><br>
+  
+  Enter Occasion: <input type="text" name="Occasion" required><br>
+  
+  Enter Color: <input type="text" name="Color" required><br>
+  
+  Enter Price: <input type="text" name="Price" required><br>
+  
+  
+  <input type="button" value="Load order Data" onclick="loadData()"/>
+  &nbsp;&nbsp;&nbsp;
+  <input type="submit" value="Update order" />
+</form>
+
+<script>
+    function handleResponse() {
+        console.log(this.responseText);
+
+        let updateForm = document.getElementById("updateItemForm");
+
+        //convert responseText to a JS object
+        let jsonArray = JSON.parse(this.responseText);
+
+        if (jsonArray.length == 0) {
+          alert("No data found for item " + updateForm.elements["Order_id"].value);
+          return;
+        }
+
+		
+        //get the references to the textboxes and display 
+        //the data from server inside them.
+		 let fType = updateForm.elements["Type"];
+        fType.value = jsonArray[0].Type;
+		
+        let fOccasion = updateForm.elements["Occasion"];
+        fOccasion.value = jsonArray[0].Occasion;
+
+        let fColor = updateForm.elements["Color"];
+       fColor.value = jsonArray[0].Color;
+
+        let fPrice = updateForm.elements["Price"><br>"];
+       fPrice.value = jsonArray[0].Price;
+    }
+
+    //load the item data from server 
+    function loadData() {
+        let updateForm = document.getElementById("updateItemForm");
+        let Order_id = updateForm.elements["Order_id"].value;
+
+        let httpRequest = new XMLHttpRequest();
+        httpRequest.addEventListener("load", handleResponse);
+      //  httpRequest.open("GET", "http://localhost:7979/invoices/"+Order_id);
+      //  httpRequest.send();
+	  
+			// in local host 
+			//httpRequest.open("GET", "http://localhost:7979/");
+			// in cloud 
+			const port = prcess.env.PORT;
+			const url ="asmaainvoices.eu-4.evennode.com" + port; 
+			httpRequest.open("GET",url);
+			httpRequest.send();
+			
+			
+    }
+  </script>
+</body>
+</html> 

@@ -1,0 +1,65 @@
+<html>
+	<head>
+		<title>Orders</title>
+		 <link rel="stylesheet" href="stylesheet.css">
+	</head>
+
+	<body>
+
+	<div class="header">
+  <a href="#default" class="logo">Flower Store </a>
+  <div class="header-right">
+	<a class="active" href="index.html">View Orders</a>
+    <a  href="AddOrder.html">Place order</a>
+    <a href="UpdateOrder.html">Update order</a>
+   <a href="DeleteOrder.html">Delete order</a>
+  </div>
+</div>
+	<div style="padding-left:20px">
+        <h3>Order Application with express.js + mongodb and web pages (using REST and XHR).</h3>
+	
+		<div id="orderCount"> </div>
+		<div id="orderDiv"> </div>
+
+        <br />
+
+     
+        <script>
+			function handleResponse() {
+  				console.log(this.responseText);
+
+  				let orderDiv = document.getElementById("orderDiv");
+  				//convert responseText to a JS object
+  				let jsonArray = JSON.parse(this.responseText);
+
+  				let orderCount = document.getElementById("orderCount");
+  				orderCount.innerHTML = "The total order done is " +jsonArray.length + " orders" ;
+
+  				let counter = 0;
+  				for (let order of jsonArray) {
+  					let span = document.createElement("span");
+                      let itemString = ++counter +") "+order.Order_id + " -  " + order.Type + " - " + order.Occasion  
+                                   + " - "  + order.Color + " - "  + order.Price.toFixed(2) +" AED ";
+  					let spanText = document.createTextNode(itemString);
+  					span.appendChild(spanText);
+
+  					//add the p to the orderDiv
+                    orderDiv.appendChild(span);
+                    orderDiv.appendChild(document.createElement("br"));  
+  				}
+			}
+
+			let httpRequest = new XMLHttpRequest();
+			httpRequest.addEventListener("load", handleResponse);
+			// in local host 
+			//httpRequest.open("GET", "http://localhost:7979/");
+			// in cloud 
+			const port = prcess.env.PORT;
+			const url ="asmaainvoices.eu-4.evennode.com" + port; 
+			httpRequest.open("GET",url);
+			httpRequest.send();
+		</script>
+</div>
+	</body>
+
+</html>

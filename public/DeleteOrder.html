@@ -1,0 +1,92 @@
+<html>
+<head>
+	<title>delete order</title>
+		 <link rel="stylesheet" href="stylesheet.css">
+</head>
+
+<body>
+
+<div class="header">
+  <a href="#default" class="logo">Flower Store </a>
+  <div class="header-right">
+   <a href="index.html">View Orders</a>
+    <a  href="AddOrder.html">Place Order</a>
+    <a href="UpdateOrder.html">Update 0rder</a>
+   <a class="active" href="DeleteOrder.html">Delete Order</a>
+  </div>
+</div>
+	
+		
+<div align="center">
+<div style="padding-left:20px">
+        <h3>Delete an order</h3>
+
+	<h4>Using HTTP DELETE method to route <code>/orders</code></h4>
+</div>
+
+<div>Note: that order id must exist</div>
+
+<form id="deleteItemForm" action="/invoices?_method=DELETE" method="POST">
+
+  Enter Order ID: <input type="text" name="Order_id" required><br>
+  
+  Enter Flower type: <input type="text" name="Type" disabled><br>
+  
+  Enter Occasion: <input type="text" name="Occasion" disabled><br>
+  
+  Enter Color: <input type="text" name="Color" disabled><br>
+  
+  Enter Price: <input type="text" name="Price" disabled><br>
+  
+  <input type="button" value="Load order Data" onclick="loadData()"/>
+  &nbsp;&nbsp;&nbsp;
+  <input type="submit" value="Delete order" />
+</form>
+
+<script>
+        function handleResponse() {
+            console.log(this.responseText);
+    
+            let deleteForm = document.getElementById("deleteItemForm");
+    
+            //convert responseText to a JS object
+            let jsonArray = JSON.parse(this.responseText);
+    
+            if (jsonArray.length == 0) {
+              alert("No data found for item " + updateForm.elements["Order_id"].value);
+              return;
+            }
+            
+			 let fType = deleteForm.elements["Type"];
+			fType.value = jsonArray[0].Type;
+		
+			let fOccasion = deleteForm.elements["Occasion"];
+			fOccasion.value = jsonArray[0].Occasion;
+
+			let fColor = deleteForm.elements["Color"];
+			fColor.value = jsonArray[0].Color;
+
+			let fPrice = deleteForm.elements["Price"><br>"];
+			fPrice.value = jsonArray[0].Price;
+	   
+        }
+    
+        //load the item data from server
+        function loadData() {
+            let updateForm = document.getElementById("deleteItemForm");
+            let Order_id = updateForm.elements["Order_id"].value;
+    
+            let httpRequest = new XMLHttpRequest();
+            httpRequest.addEventListener("load", handleResponse);
+          //  httpRequest.open("GET", "http://localhost:7979/invoices/"+Order_id);
+           // httpRequest.send();
+			
+			// in cloud 
+			const port = prcess.env.PORT;
+			const url ="asmaainvoices.eu-4.evennode.com" + port; 
+			httpRequest.open("GET",url);
+			httpRequest.send();
+        }
+      </script>
+</body>
+</html> 
